@@ -19,8 +19,9 @@ function autobind(
   target: (...args: any[]) => any,
   ctx: ClassMethodDecoratorContext
 ) {
-  console.log(target)
-  console.log(ctx)
+  ctx.addInitializer(function (this: any) {
+    this[ctx.name] = this[ctx.name].bind(this)
+  })
 }
 
 @logger
@@ -34,4 +35,5 @@ class Person {
 }
 
 const oleh = new Person()
-const julie = new Person()
+const greet = oleh.greet
+greet()
