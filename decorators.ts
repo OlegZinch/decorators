@@ -29,19 +29,24 @@ function autobind(
   }
 }
 
-function fieldLogger(target: undefined, ctx: ClassFieldDecoratorContext) {
-  console.log(target)
-  console.log(ctx)
+function replacer<T>(initValue: T) {
+  return function replacerDecorator(
+    target: undefined,
+    ctx: ClassFieldDecoratorContext
+  ) {
+    console.log(target)
+    console.log(ctx)
 
-  return (initialValue: any) => {
-    console.log('initialValue:', initialValue)
-    return ''
+    return (initialValue: any) => {
+      console.log('initialValue:', initialValue)
+      return initValue
+    }
   }
 }
 
 @logger
 class Person {
-  @fieldLogger
+  @replacer('')
   name = 'Oleh'
 
   @autobind
